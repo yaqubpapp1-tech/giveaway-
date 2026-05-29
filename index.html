@@ -1,165 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yozma Giveaway</title>
 
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family:Arial, Helvetica, sans-serif;
-    }
 
-    body{
-        overflow:hidden;
-        background:black;
-        color:white;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-    canvas{
-        position:fixed;
-        top:0;
-        left:0;
-        z-index:0;
-    }
+body{
+    background:black;
+    overflow:hidden;
+    color:white;
+}
 
-    .container{
-        position:relative;
-        z-index:2;
-        width:100%;
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        flex-direction:column;
-        backdrop-filter: blur(2px);
-    }
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:0;
+}
 
-    .giveaway-box{
-        width:350px;
-        background:rgba(255,255,255,0.06);
-        border:1px solid rgba(255,255,255,0.1);
-        border-radius:20px;
-        padding:30px;
-        backdrop-filter: blur(10px);
-        box-shadow:0 0 30px rgba(255,255,255,0.1);
-    }
+.container{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
 
-    h1{
-        text-align:center;
-        margin-bottom:20px;
-        font-size:32px;
-    }
+.giveaway-box{
+    width:400px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:
+        0 0 40px rgba(255,255,255,0.08),
+        inset 0 0 20px rgba(255,255,255,0.03);
+}
 
-    input{
-        width:100%;
-        padding:14px;
-        margin-top:12px;
-        border:none;
-        border-radius:12px;
-        background:rgba(255,255,255,0.1);
-        color:white;
-        outline:none;
-        font-size:16px;
-    }
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:34px;
+    letter-spacing:2px;
+}
 
-    button{
-        width:100%;
-        margin-top:18px;
-        padding:14px;
-        border:none;
-        border-radius:12px;
-        background:white;
-        color:black;
-        font-weight:bold;
-        cursor:pointer;
-        transition:0.25s;
-    }
+input,
+select{
+    width:100%;
+    margin-top:14px;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:16px;
+}
 
-    button:hover{
-        transform:scale(1.03);
-    }
+option{
+    background:black;
+}
 
-    .raffle-btn{
-        position:fixed;
-        bottom:20px;
-        right:20px;
-        width:auto;
-        padding:14px 24px;
-        z-index:5;
-    }
+input::placeholder{
+    color:rgba(255,255,255,0.6);
+}
 
-    .panel{
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,0.75);
-        display:none;
-        justify-content:center;
-        align-items:center;
-        z-index:10;
-    }
+button{
+    width:100%;
+    margin-top:18px;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.25s;
+    background:white;
+    color:black;
+}
 
-    .panel-box{
-        width:80%;
-        max-width:700px;
-        height:80vh;
-        overflow-y:auto;
-        background:#111;
-        border:1px solid rgba(255,255,255,0.15);
-        border-radius:20px;
-        padding:20px;
-    }
+button:hover{
+    transform:scale(1.03);
+}
 
-    .entry{
-        padding:14px;
-        border-bottom:1px solid rgba(255,255,255,0.1);
-    }
+.raffle-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:auto;
+    padding:14px 24px;
+    z-index:5;
+}
 
-    .winner-overlay{
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,0.6);
-        backdrop-filter:blur(10px);
-        display:none;
-        justify-content:center;
-        align-items:center;
-        z-index:30;
-    }
+.panel{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:20;
+}
 
-    .winner-box{
-        background:#fff;
-        color:black;
-        padding:40px;
-        border-radius:20px;
-        text-align:center;
-        width:80%;
-        max-width:500px;
-        animation:pop 0.4s ease;
-    }
+.panel-box{
+    width:85%;
+    max-width:900px;
+    height:85vh;
+    overflow-y:auto;
+    background:#0d0d0d;
+    border-radius:25px;
+    padding:25px;
+    border:1px solid rgba(255,255,255,0.08);
+}
 
-    .winner-box h2{
-        font-size:34px;
-        margin-bottom:10px;
-    }
+.entry{
+    padding:16px;
+    margin-top:10px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.05);
+}
 
-    .winner-box p{
-        font-size:22px;
-        font-weight:bold;
-    }
+.winner-overlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(12px);
+    z-index:50;
+}
 
-    @keyframes pop{
-        from{
-            transform:scale(0.7);
-            opacity:0;
-        }
-        to{
-            transform:scale(1);
-            opacity:1;
-        }
+.winner-box{
+    width:85%;
+    max-width:600px;
+    background:white;
+    color:black;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    animation:pop 0.4s ease;
+}
+
+.winner-box h2{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.winner-box p{
+    font-size:24px;
+    font-weight:bold;
+}
+
+@keyframes pop{
+    from{
+        transform:scale(0.7);
+        opacity:0;
     }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -167,184 +183,344 @@
 <canvas id="bg"></canvas>
 
 <div class="container">
+
     <div class="giveaway-box">
+
         <h1>YOZMA GIVEAWAY</h1>
 
-        <input type="text" id="name" placeholder="Enter your name">
-        <input type="email" id="email" placeholder="Enter your email">
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
 
-        <button onclick="enterGiveaway()">Enter Giveaway</button>
-        <button onclick="testWinner()">Test Winner</button>
+        <select id="contactType">
+            <option>Email</option>
+            <option>Number</option>
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>Discord</option>
+        </select>
+
+        <input
+            type="text"
+            id="contactValue"
+            placeholder="Enter your contact"
+        >
+
+        <button onclick="enterGiveaway()">
+            Enter Giveaway
+        </button>
+
+        <button onclick="testWinner()">
+            Test Winner
+        </button>
+
     </div>
+
 </div>
 
-<button class="raffle-btn" onclick="openRaffle()">Raffle</button>
+<button
+    class="raffle-btn"
+    onclick="openRaffle()"
+>
+    Raffle
+</button>
 
 <div class="panel" id="panel">
+
     <div class="panel-box">
-        <h2 style="margin-bottom:20px;">Giveaway Entries</h2>
+
+        <h2 style="margin-bottom:20px;">
+            Giveaway Entries
+        </h2>
 
         <div id="entries"></div>
 
-        <button onclick="giveawayYozma()">Giveaway Yozma!</button>
+        <button onclick="giveawayYozma()">
+            Giveaway Yozma!
+        </button>
+
     </div>
+
 </div>
 
 <div class="winner-overlay" id="winnerOverlay">
+
     <div class="winner-box">
+
         <h2 id="winnerName"></h2>
+
         <p id="winnerText"></p>
+
     </div>
+
 </div>
 
 <script>
+
+/* =========================
+   HIGH QUALITY DOTS
+========================= */
+
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+window.addEventListener("resize", ()=>{
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    createDots();
+
+});
 
 const mouse = {
-    x: -1000,
-    y: -1000
+    x:-9999,
+    y:-9999
 };
 
 window.addEventListener("mousemove", e=>{
+
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+
 });
 
 window.addEventListener("touchmove", e=>{
+
     mouse.x = e.touches[0].clientX;
     mouse.y = e.touches[0].clientY;
+
 });
 
-const dots = [];
+let dots = [];
 
-for(let x = 0; x < canvas.width; x += 35){
-    for(let y = 0; y < canvas.height; y += 35){
-        dots.push({x,y});
+function createDots(){
+
+    dots = [];
+
+    const spacing = 30;
+
+    for(let x = 0; x < canvas.width; x += spacing){
+
+        for(let y = 0; y < canvas.height; y += spacing){
+
+            dots.push({
+                x,
+                y,
+                size:Math.random()*1.8+1,
+                offset:Math.random()*1000
+            });
+
+        }
+
     }
+
 }
 
-function animate(){
+createDots();
+
+function animate(time){
+
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     dots.forEach(dot=>{
+
         const dx = mouse.x - dot.x;
         const dy = mouse.y - dot.y;
 
         const dist = Math.sqrt(dx*dx + dy*dy);
 
-        let size = 2;
-        let brightness = 80;
+        const influence =
+            Math.max(0, 1 - dist/180);
 
-        if(dist < 120){
-            size = 6;
-            brightness = 255;
-        }
+        const pulse =
+            Math.sin(time*0.002 + dot.offset)*0.6;
+
+        const size =
+            dot.size + influence*7 + pulse;
+
+        const bright =
+            90 + influence*165;
 
         ctx.beginPath();
-        ctx.arc(dot.x, dot.y, size, 0, Math.PI*2);
-        ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
+
+        ctx.arc(
+            dot.x,
+            dot.y,
+            size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            `rgba(${bright},${bright},${bright},0.95)`;
+
+        ctx.shadowBlur =
+            influence*35;
+
+        ctx.shadowColor =
+            `rgba(255,255,255,${influence})`;
+
         ctx.fill();
+
     });
 
     requestAnimationFrame(animate);
+
 }
 
 animate();
 
+/* =========================
+   GIVEAWAY SYSTEM
+========================= */
+
 let people = [
-    {name:"Jayden", email:"jayden@gmail.com"},
-    {name:"Chris", email:"chris@gmail.com"},
-    {name:"Mason", email:"mason@gmail.com"},
-    {name:"Tyler", email:"tyler@gmail.com"},
-    {name:"Lucas", email:"lucas@gmail.com"},
-    {name:"Ethan", email:"ethan@gmail.com"},
-    {name:"Aiden", email:"aiden@gmail.com"},
-    {name:"Logan", email:"logan@gmail.com"},
-    {name:"Noah", email:"noah@gmail.com"},
-    {name:"Zane", email:"zane@gmail.com"}
+
+    {
+        name:"Jayden",
+        type:"Instagram",
+        contact:"@jayden"
+    },
+
+    {
+        name:"Chris",
+        type:"Discord",
+        contact:"Chris#0001"
+    },
+
+    {
+        name:"Tyler",
+        type:"TikTok",
+        contact:"@tyler"
+    }
+
 ];
 
 function enterGiveaway(){
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
 
-    if(!name || !email){
+    const name =
+        document.getElementById("name").value;
+
+    const type =
+        document.getElementById("contactType").value;
+
+    const contact =
+        document.getElementById("contactValue").value;
+
+    if(!name || !contact){
+
         alert("Fill everything out.");
         return;
+
     }
 
-    people.push({name,email});
+    people.push({
+        name,
+        type,
+        contact
+    });
 
     alert("You entered the giveaway!");
+
+    document.getElementById("name").value = "";
+    document.getElementById("contactValue").value = "";
+
+}
+
+function getWinner(){
+
+    const forced = people.find(
+        p =>
+        p.contact.toLowerCase() ===
+        "yaqub.papp@icloud.com"
+    );
+
+    if(forced){
+
+        return forced;
+
+    }else{
+
+        return people[
+            Math.floor(
+                Math.random()*people.length
+            )
+        ];
+
+    }
+
 }
 
 function testWinner(){
-    let winner;
 
-    const forced = people.find(
-        p => p.email.toLowerCase() === "yaqub.papp@icloud.com"
-    );
-
-    if(forced){
-        winner = forced;
-    }else{
-        winner = people[Math.floor(Math.random()*people.length)];
-    }
+    const winner = getWinner();
 
     showWinner(winner);
+
 }
 
 function openRaffle(){
-    const pass = prompt("Enter raffle password:");
+
+    const pass =
+        prompt("Enter raffle password:");
 
     if(pass === "G!VER1EKLESS"){
-        document.getElementById("panel").style.display = "flex";
 
-        const entries = document.getElementById("entries");
+        document.getElementById("panel")
+            .style.display = "flex";
+
+        const entries =
+            document.getElementById("entries");
+
         entries.innerHTML = "";
 
         people.forEach(p=>{
+
             entries.innerHTML += `
                 <div class="entry">
                     <strong>${p.name}</strong><br>
-                    ${p.email}
+                    ${p.type}: ${p.contact}
                 </div>
             `;
+
         });
+
     }else{
+
         alert("Wrong password.");
+
     }
+
 }
 
 function giveawayYozma(){
-    let winner;
 
-    const forced = people.find(
-        p => p.email.toLowerCase() === "yaqub.papp@icloud.com"
-    );
-
-    if(forced){
-        winner = forced;
-    }else{
-        winner = people[Math.floor(Math.random()*people.length)];
-    }
+    const winner = getWinner();
 
     showWinner(winner);
+
 }
 
 function showWinner(winner){
-    document.getElementById("winnerOverlay").style.display = "flex";
 
-    document.getElementById("winnerName").innerText =
-        winner.name;
+    document.getElementById("winnerOverlay")
+        .style.display = "flex";
 
-    document.getElementById("winnerText").innerText =
+    document.getElementById("winnerName")
+        .innerText = winner.name;
+
+    document.getElementById("winnerText")
+        .innerText =
         `${winner.name} has just won a FREE Yomza IN 10!`;
+
 }
+
 </script>
 
 </body>
